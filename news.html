@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <title>News-Letter</title>
+</head>
+<style>
+    a {
+        text-decoration: none;
+        color: #151515;
+    }
+
+    .sticky-btm {
+            height: 35px;
+        min-width: 35px;
+        font-size: 12px;
+        background-color: #A995E5;
+        border-radius: 50%;
+        display: flex;
+        place-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        opacity: 0;
+        }
+        .sticky-btm.btm-search {
+            left: 15px;
+            right: auto;
+        }
+
+    .brand {
+        padding: 7px 15px;
+        font-weight: 600;
+        color: #8264e3;
+        border-radius: 20px;
+    }
+    .brand-mob i {
+        font-size: 25px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #EBF2FA;
+        height: 100vh;
+    }
+
+    aside {
+        position: relative;
+        overflow: hidden;
+    }
+
+    aside .aside {
+        position: fixed;
+        background-color: #F3F7FC;
+        height: calc(100% - 2rem);
+        border-radius: 30px;
+        overflow: hidden;
+    }
+
+    aside .search {
+        background-color: #E6EBF3;
+        position: relative;
+        border-radius: 100px;
+        border: 1px solid #e5e3e3;
+    }
+
+    aside .search input {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+        padding: 10px 35px 10px 20px;
+        font-size: 14px;
+    }
+
+    aside .search i {
+        position: absolute;
+    right: 4px;
+    top: 3px;
+    color: #333;
+    cursor: pointer;
+    background-color: #A995E5;
+    height: 34px;
+    width: 34px;
+    text-align: center;
+    vertical-align: bottom;
+    border-radius: 50%;
+    line-height: 34px;
+    }
+
+    aside .hero-news .heading h2 {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    aside .hero-news .heading a {
+        color: #333;
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    aside .hero-news .swiper-slide {
+        height: 200px;
+        border-radius: 20px;
+        background-size: cover;
+        position: relative;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        overflow: hidden;
+    }
+
+    aside .hero-news .swiper-slide .position-absolute {
+        bottom: 0;
+        height: 70%;
+        background-image: linear-gradient(to bottom, transparent, transparent, #8072d8dc);
+    }
+
+    aside .hero-news .swiper-slide .source {
+        padding-left: 20px;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    aside .hero-news .swiper-slide .news-heading {
+        color: #fff;
+        font-size: 15px;
+        padding: 10px 100px 10px 20px;
+        font-weight: 600;
+    }
+
+    aside .hero-news .swiper .swiper-pagination {
+        top: 2px;
+        left: 20px;
+        right: auto;
+        width: fit-content;
+    }
+
+    aside .hero-news .swiper .swiper-pagination-bullet {
+        margin: 0;
+        border-radius: 0px;
+        height: 2px;
+        background: #fff;
+        width: 15px;
+        transition: all 0.4s ease-in-out;
+    }
+
+    aside .news-list {
+        overflow: auto;
+        max-height: 100%;
+        padding-bottom: 300px;
+    }
+
+    aside .news-list .news {
+        border-bottom: 1px solid #e1e1e1;
+    }
+
+    aside .news-list .news .category {
+        color: #7E9EC3;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    aside .news-list .news .news-heading {
+        font-size: 15px;
+        font-weight: 600;
+        color: #151515;
+    }
+
+    aside .news-list .news .news-image img {
+        height: 80px;
+        width: 80px;
+        border-radius: 10px;
+    }
+</style>
+
+<style>
+    li {
+        list-style: none;
+    }
+
+    .left li {
+        padding: 5px 17px;
+        background-color: #F6F9FE;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    .left li.brand {
+        background-color: #ffffff;
+    }
+
+    .left li .fa-plus {
+        font-size: 12px;
+    }
+
+    .left .hero-slider .tool-tip {
+        background-image: linear-gradient(to right, #dbd9f2e6, transparent);
+        padding: 7px 15px;
+        display: inline-block;
+        font-weight: 600;
+        font-size: 14px;
+        border-left: 3px solid #A995E5;
+    }
+
+    .left .main-news-heading {
+        font-weight: 600;
+        font-size: 35px;
+    }
+
+    .left .hero-img {
+        border-radius: 1000px;
+        overflow: hidden;
+    }
+
+    .left .hero-slider .hero-btn span {
+        color: #151515;
+        padding: 5px 17px;
+        background-color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 15px;
+    }
+
+    .left .hero-slider .hero-btn span.arrow {
+        border-radius: 50%;
+        padding: 5px 7px;
+    }
+
+    .left .hero-slider p {
+        color: #999;
+        font-size: 13px;
+    }
+
+    .left .news span {
+        color: #7E9EC3;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .left .news h2.news-title {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    main {
+        max-width: 1400px;
+        margin: auto;
+        padding: 0px 50px;
+    }
+</style>
+
+<style>
+    @media(max-width:1200px) {
+        .left .main-news-heading {
+            font-size: 25px;
+        }
+
+        .left .news h2.news-title {
+            font-size: 15px;
+        }
+
+        .left .news p {
+            font-size: 12px;
+        }
+    }
+
+    @media(max-width:991px) {
+        body {
+            height: 100%;
+        }
+
+        aside .aside {
+            position: relative;
+            height: auto;
+        }
+
+        aside .news-list {
+            height: auto;
+            padding-bottom: 0;
+        }
+
+        main {
+            padding: 0px 20px;
+        }
+    }
+
+    @media(max-width:480px) {
+        main {
+            padding: 0px 10px;
+        }
+    }
+</style>
+
+<style>
+    .modal.fade.show {
+        backdrop-filter: blur(2px);
+    }
+    .enter-dev {
+        background-color: #A995E5;
+        padding: 1px 10px;
+        border: none;
+    }
+
+</style>
+
+<body class="overflow-hidden">
+    <main class="h-100">
+        <div class="d-flex h-100 py-3 h-100 flex-wrap">
+            <div class="brand brand-mob d-lg-none d-block mb-2"><i class="fa-solid fa-cube me-2"></i>NewsLetter</div>
+            <div class="col-xl-9 col-lg-8 d-none d-lg-block left pt-2 h-auto">
+                <nav>
+                    <ul class="d-flex gap-4 m-0 p-0 nav">
+                        <li class="brand"><i class="fa-solid fa-cube me-2"></i>NewsLetter</li>
+                        <li id="nav-item">Sports <i class="fa-solid fa-plus"></i></li>
+                        <li id="nav-item">Politics <i class="fa-solid fa-plus"></i></li>
+                        <li id="nav-item">Education <i class="fa-solid fa-plus"></i></li>
+                        <li id="nav-item">Crypto <i class="fa-solid fa-plus"></i></li>
+                        <li id="nav-item">Finance <i class="fa-solid fa-plus"></i></li>
+                    </ul>
+                </nav>
+                <div class="my-5 py-4 ">
+                    <div class="hero-slider d-flex">
+                        <div class="col-12 col-lg-6">
+                            <div class="tool-tip">BEST OF THE WEEK</div>
+                            <h1 class="main-news-heading mt-5 mb-3"></h1>
+                            <p class="mb-4" id="main-source"></p>
+                            <a href="http://" class="hero-btn" target="_blank">
+                                <span>Read article</span>
+                                <span class="arrow"><i class="fa-solid fa-arrow-right ms-1"></i></span>
+                            </a>
+                        </div>
+                        <div class="col-6 d-none d-lg-flex align-items-center ps-3 pe-5">
+                            <img src="" alt="" srcset="" class="hero-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <a class="news col-4 pe-5" id="news-left">
+                        <span class="category"></span>
+                        <h2 class="news-title my-3"></h2>
+                        <p class="news-desc"></p>
+                    </a>
+                    <a class="news col-4 pe-5" id="news-left">
+                        <span class="category"></span>
+                        <h2 class="news-title my-3"></h2>
+                        <p class="news-desc"></p>
+                    </a>
+                    <a class="news col-4 pe-5" id="news-left">
+                        <span class="category"></span>
+                        <h2 class="news-title my-3"></h2>
+                        <p class="news-desc"></p>
+                    </a>
+                </div>
+            </div>
+            <aside class="col-xl-3 col-lg-4 col-12">
+                <div class="aside col-xl-3 col-lg-4 col-12 p-2">
+                    <div class="search overflow-hidden mb-4">
+                        <input type="text" name="" id="search-text" class=""
+                            placeholder="Article name,tag,category,...">
+                        <i class="fa-solid fa-magnifying-glass" id="search-article"></i>
+                    </div>
+                    <div class="hero-news mb-3">
+                        <div class="heading d-flex justify-content-between px-3 mb-2">
+                            <h2>Recommended</h2>
+                            <!-- <a href="http://">View all<i class="fa-solid fa-arrow-right ms-1"></i></a> -->
+                        </div>
+                        <div class="swiper aside-sliderr">
+                            <div class="swiper-wrapper">
+                                <a href="#" class="swiper-slide" id="slide-news">
+                                    <div class="position-absolute w-100"></div>
+                                    <span class="source"></span>
+                                    <h3 class="news-heading"></h3>
+                                </a>
+                                <a href="#" class="swiper-slide" id="slide-news">
+                                    <div class="position-absolute w-100"></div>
+                                    <span class="source"></span>
+                                    <h3 class="news-heading"></h3>
+                                </a>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                    <div class="news-list px-3" id="news-list">
+
+                    </div>
+                </div>
+            </aside>
+        </div>
+        <div class="btm-search sticky-btm d-lg-none d-flex"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <div class="scroll-to-top sticky-btm d-lg-none d-flex"><i class="fa-solid fa-angles-up"></i></div>
+        <template id="template-news-aside">
+            <a class="news d-flex justify-content-between py-3 align-items-center" href="#" target="_blank">
+                <div class="news-detail pe-4">
+                    <span class="category">BlockChain News</span>
+                    <h3 class="news-heading mt-2">Zerodha's Nithin Kamath warns: A single hospital visit could leave you
+                        bankrupt</h3>
+                </div>
+                <div class="news-image">
+                    <img src="./assets/img/news.jpg" alt="" srcset="" id="news-image">
+                </div>
+            </a>
+        </template>
+    </main>
+    <style>
+        .loader {
+            height:50px;
+            width: 50px;
+            border-top: 1px solid #8264e3;
+            border-radius: 50%;
+            animation: rotate 1s linear infinite;
+
+        }
+        .remove {
+            top: 0;
+            background-color: #EBF2FA;
+            z-index: 99999999;
+        }
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <div class="remove h-100 w-100 d-flex justify-content-center align-items-center position-absolute top-0"><div class="loader"></div></div>
+
+    <!-- Limit exceed -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger text-center w-100"><i class="fa-solid fa-triangle-exclamation me-2"></i>Limit Exceed</h5>
+        </div>
+        <div class="modal-body">
+          Enter developer mode:-
+          <input type="text" name="" id="dev-mode">
+          <button class="enter-dev">Enter</button>
+          <p id="dev-mode-error" class="text-danger d-none text-center mt-2 mb-0">Wrong Password</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        var swiper = new Swiper(".aside-sliderr", {
+            rewind: true,
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            autoplay: {
+                delay: 3000,
+            },
+        });
+    </script>
+    <script src="script2.js"></script>
+</body>
+
+</html>
